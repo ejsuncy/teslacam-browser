@@ -154,12 +154,23 @@
 									folderInfos.push( { date: date, path: baseFolder, relative: relative, recent: true } )
 								}
 							}
+							else
+							{
+								// Need to check for intermediate date folders like RecentClips/2023-12-04/2023-12-04_12-23-59-front.mp4
+								var subfolderPath = path.join( baseFolder, subfolder )
+
+								if ( fs.lstatSync( subfolderPath ).isDirectory() )
+								{
+									addSubfolders( subfolderPath )
+								}
+							}
 						}
 					}
 				}
 			}
 			catch (e)
 			{
+				console.error(e);
 			}
 		}
 
@@ -191,6 +202,7 @@
 			}
 			catch (e)
 			{
+				console.error(e);
 				return false
 			}
 		}
@@ -205,6 +217,7 @@
 		}
 		catch (e)
 		{
+			console.error(e);
 		}
 
 		return {
